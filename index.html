@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Premium Instagram Downloader</title>
+  <title>IGdownloader</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <style>
     * {
@@ -386,7 +386,7 @@
   <div class="container">
     <div class="water-container">
       <div class="header">
-        <h1><i class="fas fa-cloud-download-alt"></i> Premium Downloader</h1>
+        <h1><i class="fas fa-cloud-download-alt"></i> IGdownloader</h1>
         <p>Download Instagram photos, videos, and reels in high quality</p>
       </div>
       
@@ -394,7 +394,7 @@
         <input type="text" id="url" placeholder="Paste Instagram URL here...">
       </div>
       
-      <button class="btn-3d" onclick="download()">
+      <button class="btn-3d">
         <i class="fas fa-download"></i> Download Now
       </button>
     </div>
@@ -404,70 +404,117 @@
   
   <div class="footer">
     <div class="footer-content">
-      <div class="developer-name">Developed by 𝐖𝐎𝐎𝐃𝐜𝐫𝐚𝐟𝐭</div>
-      <div class="copyright">© 2025 Premium Instagram Downloader | All Rights Reserved</div>
+      <div class="developer-name">WorksBeyond</div>
+      <div class="copyright">© 2025 IGdownloader | All Rights Reserved</div>
     </div>
   </div>
 
   <script>
-    async function download() {
-      const url = document.getElementById('url').value.trim();
-      const output = document.getElementById('output');
-      output.innerHTML = '';
+    // Get DOM elements
+    const urlInput = document.getElementById('url');
+    const outputDiv = document.getElementById('output');
+    const downloadButton = document.querySelector('.btn-3d');
 
-      if (!url) {
-        alert('Please enter an Instagram URL.');
-        return;
-      }
+    /**
+     * Displays an error message in the output area.
+     * @param {string} message - The error message to display.
+     */
+    function showError(message) {
+        outputDiv.innerHTML = `<div class="error-box">❌ ${message}</div>`;
+    }
 
-      output.innerHTML = '<div class="processing"><i class="fas fa-spinner fa-spin"></i> Processing your request...</div>';
+    /**
+     * Displays a processing message in the output area.
+     */
+    function showProcessing() {
+        outputDiv.innerHTML = '<div class="processing"><i class="fas fa-spinner fa-spin"></i> Processing your request...</div>';
+    }
 
-      try {
-        const res = await fetch('https://social-media-api-chi.vercel.app/api/instagram', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ url })
-        });
-        
-        const data = await res.json();
-
-        if (data.status === 'success') {
-          output.innerHTML = `
+    /**
+     * Renders the downloaded media and information to the output area.
+     * @param {object} data - The data received from the API.
+     */
+    function renderOutput(data) {
+        outputDiv.innerHTML = `
             <h2>✅ ${data.postType}</h2>
 
             <div class="caption-box">
-              <blockquote>${data.caption ? data.caption.replace(/\n/g, '<br>') : 'No caption available.'}</blockquote>
+                <blockquote>${data.caption ? data.caption.replace(/\n/g, '<br>') : 'No caption available.'}</blockquote>
             </div>
 
             <div class="count">Total Media: ${data.totalMedia}</div>
-          `;
+        `;
 
-          data.downloads.forEach((media, index) => {
+        data.downloads.forEach((media, index) => {
+            const mediaContainer = document.createElement('div');
+            mediaContainer.classList.add('media-container');
+
             const proxyUrl = `https://social-media-api-chi.vercel.app/proxy?url=${encodeURIComponent(media.url)}`;
-            output.innerHTML += `
-              <div class="media-container">
-                ${
-                  media.type === 'video'
-                    ? `<video class="media" controls src="${proxyUrl}"></video>`
-                    : `<img class="media" src="${proxyUrl}" alt="Media ${index + 1}">`
-                }
-                <br>
-                <a class="download-btn" href="${proxyUrl}" download>
-                  <i class="fas fa-download"></i> Download Media ${index + 1}
-                </a>
-              </div>
-            `;
-          });
 
-        } else {
-          output.innerHTML = `<div class="error-box">❌ ${data.details || 'Failed to download content'}</div>`;
-        }
-      } catch (error) {
-        output.innerHTML = `<div class="error-box">❌ Something went wrong. Please try again later.</div>`;
-        console.error(error);
-      }
+            if (media.type === 'video') {
+                const videoElement = document.createElement('video');
+                videoElement.classList.add('media');
+                videoElement.setAttribute('controls', '');
+                videoElement.setAttribute('src', proxyUrl);
+                mediaContainer.appendChild(videoElement);
+            } else {
+                const imgElement = document.createElement('img');
+                imgElement.classList.add('media');
+                imgElement.setAttribute('src', proxyUrl);
+                imgElement.setAttribute('alt', `Media ${index + 1}`);
+                mediaContainer.appendChild(imgElement);
+            }
+
+            const br = document.createElement('br');
+            mediaContainer.appendChild(br);
+
+            const downloadLink = document.createElement('a');
+            downloadLink.classList.add('download-btn');
+            downloadLink.setAttribute('href', proxyUrl);
+            downloadLink.setAttribute('download', '');
+            downloadLink.innerHTML = `<i class="fas fa-download"></i> Download Media ${index + 1}`;
+            mediaContainer.appendChild(downloadLink);
+
+            outputDiv.appendChild(mediaContainer);
+        });
     }
+
+    /**
+     * Handles the download process when the button is clicked.
+     */
+    async function handleDownload() {
+        const url = urlInput.value.trim();
+        outputDiv.innerHTML = ''; // Clear previous output
+
+        if (!url) {
+            showError('Please enter an Instagram URL.');
+            return;
+        }
+
+        showProcessing();
+
+        try {
+            const response = await fetch('https://social-media-api-chi.vercel.app/api/instagram', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ url })
+            });
+
+            const data = await response.json();
+
+            if (data.status === 'success') {
+                renderOutput(data);
+            } else {
+                showError(data.details || 'Failed to download content. Please check the URL and try again.');
+            }
+        } catch (error) {
+            console.error('Download error:', error);
+            showError('Something went wrong. Please try again later.');
+        }
+    }
+
+    // Attach event listener to the download button
+    downloadButton.addEventListener('click', handleDownload);
   </script>
 </body>
 </html>
-
