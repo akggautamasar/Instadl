@@ -470,7 +470,7 @@
             const mediaContainer = document.createElement('div');
             mediaContainer.classList.add('media-container');
 
-            const proxyUrl = `https://social-media-api-chi.vercel.app/proxy?url=${encodeURIComponent(media.url)}`;
+            const proxyUrl = `https://igdownyapi.vercel.app/proxy?url=${encodeURIComponent(media.url)}`;
 
             if (media.type === 'video') {
                 const videoElement = document.createElement('video');
@@ -515,7 +515,7 @@
         showProcessing();
 
         try {
-            const response = await fetch('https://social-media-api-chi.vercel.app/api/instagram', {
+            const response = await fetch('https://igdownyapi.vercel.app/api/instagram', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ url })
