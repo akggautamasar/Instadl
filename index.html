@@ -6,6 +6,7 @@
   <title>IGdownloader</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <style>
+    /* Reset and base styles */
     * {
       margin: 0;
       padding: 0;
@@ -13,19 +14,21 @@
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     }
 
+    /* Body background and layout for a light theme */
     body {
-      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      background: linear-gradient(135deg, #e0f2f7 0%, #bbdefb 100%); /* Light blue gradient */
       min-height: 100vh;
       padding: 20px;
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      color: #fff;
+      color: #333; /* Dark text for light background */
       overflow-x: hidden;
       background-attachment: fixed;
     }
 
+    /* Main container for the app */
     .container {
       width: 100%;
       max-width: 600px;
@@ -33,22 +36,23 @@
       text-align: center;
     }
 
-    /* Water-like shadow container */
+    /* Water-like shadow container for the main content area */
     .water-container {
-      background: rgba(255, 255, 255, 0.1);
-      backdrop-filter: blur(10px);
+      background: rgba(255, 255, 255, 0.5); /* Lighter white background with transparency */
+      backdrop-filter: blur(10px); /* Frosted glass effect */
       border-radius: 20px;
       padding: 30px;
       margin-bottom: 30px;
       box-shadow: 
-        0 15px 35px rgba(0, 0, 0, 0.2),
-        0 5px 15px rgba(0, 0, 0, 0.1),
-        inset 0 0 20px rgba(255, 255, 255, 0.2);
-      border: 1px solid rgba(255, 255, 255, 0.2);
+        0 10px 25px rgba(0, 0, 0, 0.1), /* Less intense shadow for a lighter feel */
+        0 3px 10px rgba(0, 0, 0, 0.05),
+        inset 0 0 15px rgba(255, 255, 255, 0.3); /* Inner white glow */
+      border: 1px solid rgba(255, 255, 255, 0.3); /* Subtle white border */
       position: relative;
-      overflow: hidden;
+      overflow: hidden; /* Ensures pseudo-element doesn't spill */
     }
 
+    /* Pseudo-element for the animated water effect */
     .water-container::before {
       content: '';
       position: absolute;
@@ -56,17 +60,18 @@
       left: -50%;
       width: 200%;
       height: 200%;
-      background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 60%);
-      animation: waterEffect 8s infinite linear;
-      z-index: -1;
+      background: radial-gradient(circle, rgba(255,255,255,0.2) 0%, transparent 60%); /* Lighter radial gradient */
+      animation: waterEffect 8s infinite linear; /* Continuous rotation */
+      z-index: -1; /* Behind the main content */
     }
 
+    /* Keyframe animation for the water effect */
     @keyframes waterEffect {
       0% { transform: rotate(0deg) translate(0, 0); }
       100% { transform: rotate(360deg) translate(0, 0); }
     }
 
-    /* Header with 3D effect */
+    /* Header section styling with a subtle 3D effect */
     .header {
       margin-bottom: 25px;
       position: relative;
@@ -75,110 +80,115 @@
     .header h1 {
       font-size: 2.8rem;
       margin-bottom: 10px;
-      color: white;
+      color: #2c3e50; /* Darker header text for contrast */
       text-shadow: 
-        0 2px 10px rgba(0, 0, 0, 0.3),
-        0 4px 20px rgba(0, 0, 0, 0.15),
-        0 6px 30px rgba(0, 0, 0, 0.1);
+        0 1px 5px rgba(0, 0, 0, 0.15),
+        0 2px 10px rgba(0, 0, 0, 0.075),
+        0 3px 15px rgba(0, 0, 0, 0.05); /* Softer text shadow */
       letter-spacing: 1px;
       position: relative;
       display: inline-block;
-      transform: perspective(500px) rotateX(15deg);
+      transform: perspective(500px) rotateX(10deg); /* Reduced rotation for lighter feel */
     }
 
+    /* Underline effect for the header title */
     .header h1::after {
       content: '';
       position: absolute;
-      bottom: -10px;
+      bottom: -8px; /* Slightly adjusted position */
       left: 10%;
       width: 80%;
-      height: 4px;
-      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.7), transparent);
+      height: 3px; /* Thinner line */
+      background: linear-gradient(90deg, transparent, rgba(0, 0, 0, 0.2), transparent); /* Darker line */
       border-radius: 50%;
     }
 
     .header p {
-      color: rgba(255, 255, 255, 0.85);
+      color: #555; /* Darker paragraph text */
       font-size: 1.1rem;
       max-width: 500px;
       margin: 0 auto;
       line-height: 1.6;
     }
 
-    /* 3D input field */
+    /* Input field container */
     .input-container {
       position: relative;
       margin: 25px 0;
     }
 
+    /* Input field styling */
     #url {
       width: 100%;
-      padding: 16px 20px;
+      padding: 14px 18px; /* Slightly less padding */
       border-radius: 12px;
-      border: none;
-      background: rgba(255, 255, 255, 0.15);
+      border: 1px solid #ccc; /* Light gray border */
+      background: rgba(255, 255, 255, 0.7); /* Lighter background with transparency */
       backdrop-filter: blur(5px);
-      color: white;
+      color: #333; /* Darker text */
       font-size: 1rem;
       box-shadow: 
-        inset 0 2px 10px rgba(0, 0, 0, 0.1),
-        0 5px 20px rgba(0, 0, 0, 0.15);
-      border: 1px solid rgba(255, 255, 255, 0.2);
+        inset 0 1px 5px rgba(0, 0, 0, 0.05),
+        0 3px 10px rgba(0, 0, 0, 0.075); /* Subtle inner and outer shadows */
       transition: all 0.3s ease;
     }
 
     #url::placeholder {
-      color: rgba(255, 255, 255, 0.7);
+      color: #999; /* Light gray placeholder text */
     }
 
     #url:focus {
       outline: none;
-      background: rgba(255, 255, 255, 0.25);
+      background: rgba(255, 255, 255, 0.8); /* Slightly lighter on focus */
+      border-color: #aaa; /* Darker border on focus */
       box-shadow: 
-        inset 0 2px 15px rgba(0, 0, 0, 0.2),
-        0 8px 25px rgba(0, 0, 0, 0.25);
+        inset 0 1px 7px rgba(0, 0, 0, 0.1),
+        0 5px 15px rgba(0, 0, 0, 0.1);
     }
 
-    /* 3D Button */
+    /* 3D Button styling */
     .btn-3d {
       position: relative;
       display: inline-block;
-      padding: 16px 45px;
-      background: linear-gradient(135deg, #ff9a9e 0%, #fad0c4 100%);
-      border: none;
+      padding: 14px 40px; /* Slightly less padding */
+      background: linear-gradient(135deg, #fff 0%, #f0f8ff 100%); /* Light background gradient */
+      border: 1px solid #ddd; /* Light border */
       border-radius: 50px;
-      color: #764ba2;
-      font-size: 1.2rem;
-      font-weight: 700;
+      color: #43a047; /* Green as a lighter primary color */
+      font-size: 1.1rem; /* Slightly smaller font */
+      font-weight: 600; /* Slightly less bold */
       text-transform: uppercase;
-      letter-spacing: 1px;
+      letter-spacing: 0.5px;
       cursor: pointer;
-      transform: perspective(500px) rotateX(15deg);
+      transform: perspective(300px) rotateX(10deg); /* Reduced perspective and rotation */
       box-shadow: 
-        0 10px 0 #d57a7e,
-        0 15px 20px rgba(0, 0, 0, 0.3),
-        inset 0 3px 0 rgba(255, 255, 255, 0.4);
+        0 6px 0 #c1f0c5, /* Lighter shadow color for the "depth" effect */
+        0 8px 12px rgba(0, 0, 0, 0.15), /* Outer shadow */
+        inset 0 2px 0 rgba(255, 255, 255, 0.6); /* Inner highlight */
       transition: all 0.2s ease;
       overflow: hidden;
       margin: 15px 0;
     }
 
+    /* Button hover states */
     .btn-3d:hover {
-      transform: perspective(500px) rotateX(15deg) translateY(-3px);
+      transform: perspective(300px) rotateX(10deg) translateY(-2px); /* Lifts slightly on hover */
       box-shadow: 
-        0 13px 0 #d57a7e,
-        0 18px 25px rgba(0, 0, 0, 0.35),
-        inset 0 3px 0 rgba(255, 255, 255, 0.4);
+        0 8px 0 #c1f0c5,
+        0 10px 15px rgba(0, 0, 0, 0.18),
+        inset 0 2px 0 rgba(255, 255, 255, 0.7);
     }
 
+    /* Button active (click) states */
     .btn-3d:active {
-      transform: perspective(500px) rotateX(15deg) translateY(5px);
+      transform: perspective(300px) rotateX(10deg) translateY(2px); /* Pushes down on click */
       box-shadow: 
-        0 5px 0 #d57a7e,
-        0 8px 10px rgba(0, 0, 0, 0.3),
-        inset 0 3px 0 rgba(255, 255, 255, 0.4);
+        0 3px 0 #c1f0c5,
+        0 5px 8px rgba(0, 0, 0, 0.12),
+        inset 0 2px 0 rgba(255, 255, 255, 0.5);
     }
 
+    /* Shimmer effect for the button */
     .btn-3d::before {
       content: '';
       position: absolute;
@@ -186,15 +196,15 @@
       left: -100%;
       width: 100%;
       height: 100%;
-      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent); /* Lighter highlight */
       transition: 0.5s;
     }
 
     .btn-3d:hover::before {
-      left: 100%;
+      left: 100%; /* Shimmer moves across */
     }
 
-    /* Output area */
+    /* Output area styling */
     .output {
       width: 100%;
       margin-top: 25px;
@@ -205,179 +215,190 @@
       transition: all 0.5s ease;
     }
 
+    /* Caption box styling */
     .caption-box {
-      background: rgba(255, 255, 255, 0.1);
+      background: rgba(255, 255, 255, 0.6); /* Lighter background with transparency */
       backdrop-filter: blur(5px);
-      padding: 18px;
+      padding: 16px; /* Slightly less padding */
       margin-top: 15px;
       border-radius: 15px;
       width: 100%;
       font-size: 15px;
-      color: #fff;
+      color: #444; /* Darker text */
       box-shadow: 
-        0 8px 20px rgba(0, 0, 0, 0.15),
-        inset 0 0 10px rgba(255, 255, 255, 0.1);
-      border: 1px solid rgba(255, 255, 255, 0.15);
+        0 5px 12px rgba(0, 0, 0, 0.075),
+        inset 0 0 8px rgba(0, 0, 0, 0.05); /* Softer shadows */
+      border: 1px solid rgba(0, 0, 0, 0.05); /* Very light border */
     }
 
     .caption-box blockquote {
       margin: 0;
       font-style: italic;
-      color: rgba(255, 255, 255, 0.9);
+      color: #666; /* Slightly lighter quote text */
       line-height: 1.6;
     }
 
+    /* Styling for media elements (video and image) */
     video, img.media {
       max-width: 100%;
-      margin-top: 20px;
+      margin-top: 15px; /* Reduced top margin */
       border-radius: 15px;
       box-shadow: 
-        0 10px 30px rgba(0, 0, 0, 0.25),
-        0 6px 10px rgba(0, 0, 0, 0.2);
-      border: 2px solid rgba(255, 255, 255, 0.2);
+        0 5px 15px rgba(0, 0, 0, 0.1),
+        0 3px 7px rgba(0, 0, 0, 0.05); /* Softer shadows */
+      border: 1px solid #eee; /* Very light border */
     }
 
+    /* Download button for media items */
     .download-btn {
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      margin-top: 15px;
-      background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);
-      color: #2c3e50;
-      padding: 12px 25px;
+      margin-top: 10px; /* Reduced top margin */
+      background: linear-gradient(135deg, #b2ebf2 0%, #80deea 100%); /* Light blue download button */
+      color: #00695c; /* Darker teal text */
+      padding: 10px 20px; /* Reduced padding */
       border-radius: 50px;
       text-decoration: none;
-      font-weight: 700;
+      font-weight: 600;
       transition: all 0.3s ease;
       box-shadow: 
-        0 5px 0 #2bb673,
-        0 8px 15px rgba(0, 0, 0, 0.2);
-      transform: perspective(300px) rotateX(10deg);
+        0 3px 0 #64c7c0, /* Shadow for depth */
+        0 5px 8px rgba(0, 0, 0, 0.1);
+      transform: perspective(200px) rotateX(5deg); /* Further reduced 3D effect */
     }
 
+    /* Download button hover states */
     .download-btn:hover {
-      transform: perspective(300px) rotateX(10deg) translateY(-3px);
+      transform: perspective(200px) rotateX(5deg) translateY(-1px);
       box-shadow: 
-        0 8px 0 #2bb673,
-        0 12px 20px rgba(0, 0, 0, 0.25);
+        0 4px 0 #64c7c0,
+        0 6px 10px rgba(0, 0, 0, 0.12);
     }
 
+    /* Download button active states */
     .download-btn:active {
-      transform: perspective(300px) rotateX(10deg) translateY(3px);
+      transform: perspective(200px) rotateX(5deg) translateY(1px);
       box-shadow: 
-        0 2px 0 #2bb673,
-        0 4px 10px rgba(0, 0, 0, 0.2);
+        0 2px 0 #64c7c0,
+        0 3px 5px rgba(0, 0, 0, 0.08);
     }
 
+    /* Media count display */
     .count {
-      margin-top: 15px;
-      color: rgba(255, 255, 255, 0.9);
-      font-size: 16px;
+      margin-top: 10px; /* Reduced top margin */
+      color: #666; /* Darker text */
+      font-size: 15px;
       font-weight: 500;
-      background: rgba(0, 0, 0, 0.15);
-      padding: 8px 20px;
+      background: rgba(0, 0, 0, 0.05); /* Very light background */
+      padding: 6px 15px; /* Reduced padding */
       border-radius: 20px;
       display: inline-block;
     }
 
-    /* Footer with 3D effect */
+    /* Footer section */
     .footer {
       width: 100%;
       text-align: center;
-      margin-top: 40px;
-      padding: 30px 20px;
+      margin-top: 30px; /* Reduced top margin */
+      padding: 20px 15px; /* Reduced padding */
       position: relative;
     }
 
+    /* Footer content box */
     .footer-content {
-      background: rgba(0, 0, 0, 0.2);
+      background: rgba(0, 0, 0, 0.05); /* Very light background with transparency */
       backdrop-filter: blur(8px);
       border-radius: 20px;
-      padding: 25px;
+      padding: 20px; /* Reduced padding */
       box-shadow: 
-        0 10px 30px rgba(0, 0, 0, 0.25),
-        inset 0 0 15px rgba(255, 255, 255, 0.1);
-      border: 1px solid rgba(255, 255, 255, 0.15);
+        0 5px 15px rgba(0, 0, 0, 0.075),
+        inset 0 0 10px rgba(0, 0, 0, 0.025); /* Subtle shadows */
+      border: 1px solid rgba(0, 0, 0, 0.025); /* Very light border */
       position: relative;
       overflow: hidden;
     }
 
+    /* Developer branding text */
     .developer-name {
-      font-size: 2.2rem;
-      font-weight: 800;
-      color: white;
+      font-size: 2rem; /* Slightly smaller */
+      font-weight: 700; /* Slightly less bold */
+      color: #37474f; /* Dark gray */
       text-transform: uppercase;
-      letter-spacing: 3px;
+      letter-spacing: 2px;
       text-shadow: 
-        0 2px 0 #764ba2, 
-        0 4px 0 rgba(118, 75, 162, 0.7),
-        0 6px 0 rgba(118, 75, 162, 0.5),
-        0 8px 0 rgba(118, 75, 162, 0.3),
-        0 10px 20px rgba(0, 0, 0, 0.4);
-      transform: perspective(500px) rotateX(20deg);
-      margin-bottom: 20px;
+        0 1px 0 #b0bec5, /* Lighter shadow for the 3D effect */
+        0 2px 0 rgba(176, 190, 197, 0.7),
+        0 3px 0 rgba(176, 190, 197, 0.5),
+        0 4px 0 rgba(176, 190, 197, 0.3),
+        0 5px 10px rgba(0, 0, 0, 0.1);
+      transform: perspective(300px) rotateX(10deg); /* Reduced perspective and rotation */
+      margin-bottom: 15px; /* Reduced bottom margin */
       position: relative;
       display: inline-block;
     }
 
     .copyright {
-      color: rgba(255, 255, 255, 0.8);
-      font-size: 1rem;
-      margin-top: 10px;
+      color: #777; /* Slightly lighter copyright text */
+      font-size: 0.9rem; /* Slightly smaller font */
+      margin-top: 8px; /* Reduced top margin */
     }
 
-    /* Animation for processing */
+    /* Animation for processing message */
     @keyframes pulse {
       0% { transform: scale(1); opacity: 0.7; }
-      50% { transform: scale(1.05); opacity: 1; }
+      50% { transform: scale(1.03); opacity: 1; } /* Less intense pulse */
       100% { transform: scale(1); opacity: 0.7; }
     }
 
     .processing {
       animation: pulse 1.5s infinite;
-      font-size: 1.2rem;
+      font-size: 1.1rem; /* Slightly smaller font */
       display: inline-flex;
       align-items: center;
-      gap: 10px;
+      gap: 8px; /* Reduced gap */
+      color: #546e7a; /* Grayish blue */
     }
     
+    /* Container for individual media items */
     .media-container {
       width: 100%;
       max-width: 500px;
-      margin: 15px 0;
+      margin: 12px 0; /* Reduced margin */
     }
     
+    /* Error message box styling */
     .error-box {
-      background: rgba(255, 100, 100, 0.2);
+      background: rgba(255, 235, 238, 0.7); /* Light red background with transparency */
       backdrop-filter: blur(5px);
-      padding: 15px;
+      padding: 14px; /* Slightly less padding */
       border-radius: 15px;
       width: 100%;
       font-size: 15px;
-      color: #fff;
+      color: #d32f2f; /* Dark red text */
       box-shadow: 
-        0 8px 20px rgba(0, 0, 0, 0.15),
-        inset 0 0 10px rgba(255, 100, 100, 0.3);
-      border: 1px solid rgba(255, 100, 100, 0.3);
+        0 5px 12px rgba(0, 0, 0, 0.075),
+        inset 0 0 8px rgba(244, 67, 54, 0.1);
+      border: 1px solid rgba(244, 67, 54, 0.2); /* Light red border */
     }
 
-    /* Responsive design */
+    /* Responsive design adjustments for smaller screens */
     @media (max-width: 600px) {
       .header h1 {
         font-size: 2.2rem;
       }
       
       .developer-name {
-        font-size: 1.8rem;
+        font-size: 1.6rem;
       }
       
       .water-container {
-        padding: 20px 15px;
+        padding: 15px 10px; /* Reduced padding */
       }
       
       .btn-3d {
-        padding: 14px 30px;
-        font-size: 1.1rem;
+        padding: 12px 25px; /* Reduced padding */
+        font-size: 1rem;
       }
     }
   </style>
